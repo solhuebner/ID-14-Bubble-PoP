@@ -11,7 +11,7 @@
 void stateMenuPlay()
 //void stateGamePrepareLevel()
 {
-  player.score = 0; 
+  player.score = 0;
   gameState = STATE_GAME_NEXT_LEVEL;
 };
 
@@ -37,7 +37,7 @@ void stateGamePause()
 
 void stateGameOver()
 {
-  
+
 };
 
 

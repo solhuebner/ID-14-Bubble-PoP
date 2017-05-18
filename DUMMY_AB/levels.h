@@ -5,7 +5,7 @@
 
 void checkCollisions()
 {
-  
+
 }
 
 #endif

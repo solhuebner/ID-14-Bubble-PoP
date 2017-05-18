@@ -5,7 +5,6 @@
 
 void stateMenuIntro()
 {
-  gameState =STATE_GAME_PLAYING;
   globalCounter++;
   sprites.drawSelfMasked(34, 4, T_arg, 0);
   if (globalCounter > 180) gameState = STATE_MENU_MAIN;
@@ -13,16 +12,14 @@ void stateMenuIntro()
 
 void stateMenuMain()
 {
+  sprites.drawSelfMasked(0, 0, titleScreen, 0);
   for (byte i = 0; i < 4; i++)
   {
-    sprites.drawSelfMasked(i*32,0, titleScreen, i);
+    if (((2 + i) - menuSelection) != 0)
     {
-      if (((2 + i) - menuSelection) != 0)
-      {
-        sprites.drawSelfMasked(21 + (22 * i), 60, menuText, i);
-      }
-      if (((2 + i) - menuSelection) == 0) sprites.drawSelfMasked(21 + (22 * i), 56, menuText, i);
+      sprites.drawSelfMasked(21 + (22 * i), 60, menuText, i);
     }
+    if (((2 + i) - menuSelection) == 0) sprites.drawSelfMasked(21 + (22 * i), 56, menuText, i);
   }
   if (arduboy.justPressed(RIGHT_BUTTON) && (menuSelection < 5)) menuSelection++;
   if (arduboy.justPressed(LEFT_BUTTON) && (menuSelection > 2)) menuSelection--;
@@ -31,19 +28,21 @@ void stateMenuMain()
 
 void stateMenuHelp()
 {
-  sprites.drawSelfMasked(32, 0, qrcode, 0);
+  sprites.drawSelfMasked(32, 0, qrcodeDUMMY, 0);
   if (arduboy.justPressed(A_BUTTON | B_BUTTON)) gameState = STATE_MENU_MAIN;
 }
 
 
 void stateMenuInfo()
 {
-  sprites.drawSelfMasked(16, 36, info, 0);
+  sprites.drawSelfMasked(16, 36, infoScreen, 0);
   if (arduboy.justPressed(A_BUTTON | B_BUTTON)) gameState = STATE_MENU_MAIN;
 }
 
 void stateMenuSoundfx()
 {
+  sprites.drawSelfMasked(0, 0, titleScreen, 0);
+  
   if (arduboy.justPressed(RIGHT_BUTTON)) arduboy.audio.on();
   if (arduboy.justPressed(LEFT_BUTTON)) arduboy.audio.off();
   if (arduboy.justPressed(A_BUTTON | B_BUTTON))
