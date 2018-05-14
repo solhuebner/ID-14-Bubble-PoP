@@ -60,7 +60,7 @@ void stateGamePlaying()
   }
   drawBallQueue();
   // Draw launcher
-  sprites.drawPlusMask(58, 50, sprLauncher, launcherAngle / 60);
+  sprites.drawPlusMask(58, 50, sprLauncher, (launcherAngle - 22) / 28);
   if (ballQueue[0] != 255)
     sprites.drawErase(58 + 4, 50 + 5, sprBalls, ballQueue[0]);
 };
