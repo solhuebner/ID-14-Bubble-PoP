@@ -18,7 +18,11 @@ void stateMenuPlay()
 
 void stateGameNextLevel()
 {
+  clearBalls();
   fillBallQueue();
+  shiftBallsDown(true);
+  shiftBallsDown(true);
+  dropTimer = TIMER_AMOUNT;
   level++;
   gameState = STATE_GAME_PLAYING;
 };
@@ -26,6 +30,15 @@ void stateGameNextLevel()
 
 void stateGamePlaying()
 {
+  // Shift balls down periodically
+  if (--dropTimer == 0) {
+    shiftBallsDown(true);
+    dropTimer = TIMER_AMOUNT;
+  }
+
+  if (checkBottomRow())
+    gameState = STATE_GAME_OVER;
+    
   checkInputs();
   checkCollisions();
 
@@ -59,7 +72,7 @@ void stateGamePause()
 
 void stateGameOver()
 {
-
+  gameState = STATE_MENU_INTRO;
 };
 
 

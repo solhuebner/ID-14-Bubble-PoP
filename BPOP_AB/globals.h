@@ -37,6 +37,7 @@
 #define ROOT_BIT                     6
 #define TOTAL_BALLS                  121 // 11 rows X 11 columns
 #define DEAD_BALL                    6
+#define TIMER_AMOUNT                 1000
 
 void drawBackground();
 void setBallType(byte ballIndex, byte type);
@@ -53,6 +54,7 @@ byte alignType = 1;         // This should be toggled (0 -> 1, 1 -> 0, XOR'd wit
 byte randomCounter = 0;
 byte fallOffset = 0;
 bool falling = false;
+uint16_t dropTimer;
 //byte nextBall = 0;
 float radAngle;
 byte ballQueue[6];

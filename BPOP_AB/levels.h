@@ -73,6 +73,9 @@ void checkCollisions()
  * checks death for the surrounding balls of the same type.
  */
 byte checkSurrounding(byte index) {
+  if (checkDeath(index))
+    return true;
+    
   byte type = getBallType(index);
   byte row = index / 11;
   byte col = index % 11;

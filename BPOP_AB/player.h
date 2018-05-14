@@ -169,4 +169,18 @@ void shiftBallsDown(bool fillTopRow) {
   }
 }
 
+bool checkBottomRow() {
+  for (byte i = TOTAL_BALLS-1; i >= TOTAL_BALLS-12; i--) {
+    if (bitRead(balls[i].state, ACTIVE_BIT))
+      return true;
+  }
+  return false;
+}
+
+void clearBalls() {
+  for (byte i = TOTAL_BALLS-1; i < TOTAL_BALLS; i--) {
+    balls[i].state = 0;
+  }
+}
+
 #endif

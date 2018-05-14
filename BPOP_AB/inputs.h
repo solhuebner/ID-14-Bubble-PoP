@@ -25,9 +25,9 @@ void checkInputs()
   }
 
   // DEBUG
-  if (arduboy.justPressed(A_BUTTON)) {
+  /*if (arduboy.justPressed(A_BUTTON)) {
     shiftBallsDown(true);
-  }
+  }*/
 }
 
 
