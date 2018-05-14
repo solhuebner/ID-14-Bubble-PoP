@@ -1,8 +1,8 @@
-# Game Name
-![Image](http://www.team-arg.org/masterfiles/team-arg-dummy/images/banner-ID-00.png)
+# Bubble PoP
+![Image](http://www.team-arg.org/masterfiles/team-arg-bpop/images/banner-ID-14.png)
 
-Outpost Defense : http://www.team-arg.org/dummy-manual.html  
-**Download latest Arduboy version and source :** https://github.com/TEAMarg/ID-00-template/releases/latest  
+Bubble PoP : http://www.team-arg.org/bpop-manual.html  
+**Download latest Arduboy version and source :** https://github.com/TEAMarg/ID-14-bpop/releases/latest  
 MADE by TEAM a.r.g. : http://www.team-arg.org/more-about.html
  
-2017 - JO3RI - Trodoss
+2018 - GAVENO - JO3RI

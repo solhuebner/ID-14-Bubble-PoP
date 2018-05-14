@@ -11,7 +11,7 @@
 void stateMenuPlay()
 //void stateGamePrepareLevel()
 {
-  player.score = 0;
+
   gameState = STATE_GAME_NEXT_LEVEL;
 };
 
@@ -26,7 +26,6 @@ void stateGameNextLevel()
 void stateGamePlaying()
 {
   checkInputs();
-  drawPlayer();
   checkCollisions();
 };
 

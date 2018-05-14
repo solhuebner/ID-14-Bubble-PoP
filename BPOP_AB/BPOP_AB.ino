@@ -1,11 +1,11 @@
 /*
-  GAME NAME: http://www.team-arg.org/dummy-manual.html
+  Bubble PoP: http://www.team-arg.org/bpop-manual.html
 
-  Arduboy version 0.1:  http://www.team-arg.org/dummy-downloads.html
+  Arduboy version 0.1:  http://www.team-arg.org/bpop-downloads.html
 
   MADE by TEAM a.r.g. : http://www.team-arg.org/more-about.html
 
-  2017 - JO3RI
+  2018 - GAVENO - JO3RI
 
   License: MIT : https://opensource.org/licenses/MIT
 
