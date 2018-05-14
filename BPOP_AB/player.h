@@ -145,4 +145,27 @@ void drawBallQueue() {
   }
 }
 
+void shiftBallsDown(bool fillTopRow) {
+  alignType ^= 1;
+  for (byte i = 10; i > 0; i--) { // row
+    for (byte j = 10; j < 11; j--) { // column
+      balls[j + i * 11] = balls[j + (i - 1) * 11];
+    }
+  }
+  if (fillTopRow) {
+    for (byte i = 10; i < 11; i--) {
+      balls[i].state = generateRandomNumber(6);
+      bitSet(balls[i].state, ACTIVE_BIT);
+      bitSet(balls[i].state, ROOT_BIT);
+    }
+    if (!alignType)
+      bitClear(balls[10].state, ACTIVE_BIT); 
+  }
+  else {
+    for (byte i = 10; i < 11; i--) {
+      bitClear(balls[i].state, ACTIVE_BIT);
+    }
+  }
+}
+
 #endif

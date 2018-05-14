@@ -23,6 +23,11 @@ void checkInputs()
     aBallY = 58;
     aBallRad = radAngle;
   }
+
+  // DEBUG
+  if (arduboy.justPressed(A_BUTTON)) {
+    shiftBallsDown(true);
+  }
 }
 
 
