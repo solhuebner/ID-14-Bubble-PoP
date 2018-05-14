@@ -33,6 +33,30 @@
 
 #define FIRST_LEVEL                  0
 
+#define ACTIVE_BIT                   5
+#define ROOT_BIT                     6
+#define TOTAL_BALLS                  121 // 11 rows X 11 columns
+#define DEAD_BALL                    6
+
+void drawBackground();
+void setBallType(byte ballIndex, byte type);
+byte getBallType(byte ballIndex);
+void drawBalls();
+void killBall(byte index);
+
+float aBallX = 0.0;
+float aBallY = 0.0;
+float aBallRad;
+byte aBallSpeed = 1;
+byte aBall = 255;
+byte alignType = 1;
+byte randomCounter = 0;
+byte fallOffset = 0;
+bool falling = false;
+//byte nextBall = 0;
+float radAngle;
+byte ballQueue[6];
+
 
 Arduboy2Base arduboy;
 Sprites sprites;
@@ -42,5 +66,18 @@ byte gameState = STATE_MENU_INTRO;   // start the game with the TEAM a.r.g. logo
 byte menuSelection = STATE_MENU_PLAY; // PLAY menu item is pre-selected
 byte globalCounter = 0;
 byte level = FIRST_LEVEL;
+
+/*
+   !!!Maximum input value is 26!!!
+*/
+byte generateRandomNumber(byte maxValue)
+{
+  randomCounter += arduboy.frameCount;
+  unsigned int nr = randomCounter;
+  nr *= maxValue * 10;
+  nr /= 2560;
+
+  return nr;
+}
 
 #endif
