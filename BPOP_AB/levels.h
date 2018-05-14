@@ -20,7 +20,7 @@ void checkCollisions()
  *  a better approach may be to only check the balls that the last launched ball
  *  ends up touching to allow levels to start out with 3 or more balls touching already.
  */
-bool checkDeath() {
+/*bool checkDeath() {
   for (byte i = TOTAL_BALLS-1; i < TOTAL_BALLS; i--) {
     if (bitRead(balls[i].state, ACTIVE_BIT)) {
       byte type = getBallType(i);
@@ -55,7 +55,7 @@ bool checkDeath() {
       if (nball != 255 && getBallType(nball) == type && bitRead(balls[nball].state, ACTIVE_BIT))
         connections++;
 
-      Serial.print("Ball: "); Serial.print(i); Serial.print(" connections: "); Serial.println(connections);
+      //Serial.print("Ball: "); Serial.print(i); Serial.print(" connections: "); Serial.println(connections);
 
       if (connections >= 2) {
         killBall(i);
@@ -64,6 +64,102 @@ bool checkDeath() {
     }
   }
   return false;
+}*/
+
+/*
+ * checkSurrounding
+ * takes: index of ball to check (the ball that just landed)
+ * returns: whether ball death occurred
+ * checks death for the surrounding balls of the same type.
+ */
+byte checkSurrounding(byte index) {
+  byte type = getBallType(index);
+  byte row = index / 11;
+  byte col = index % 11;
+  byte connections = 0;
+  byte colOffset = 1;
+  byte ret = 0;
+  if (row % 2 == alignType)
+    colOffset = 0;
+
+  // Top left
+  byte nball = getBall(row-1, col - colOffset);
+  if (nball != 255 && getBallType(nball) == type && bitRead(balls[nball].state, ACTIVE_BIT))
+    ret |= checkDeath(nball);
+  // Top right
+  nball = getBall(row-1, col + 1 - colOffset);
+  if (nball != 255 && getBallType(nball) == type && bitRead(balls[nball].state, ACTIVE_BIT))
+    ret |= checkDeath(nball);
+  // Left
+  nball = getBall(row, col - 1);
+  if (nball != 255 && getBallType(nball) == type && bitRead(balls[nball].state, ACTIVE_BIT))
+    ret |= checkDeath(nball);
+  // Right
+  nball = getBall(row, col + 1);
+  if (nball != 255 && getBallType(nball) == type && bitRead(balls[nball].state, ACTIVE_BIT))
+    ret |= checkDeath(nball);
+  // Bottom right
+  nball = getBall(row + 1, col + 1 - colOffset);
+  if (nball != 255 && getBallType(nball) == type && bitRead(balls[nball].state, ACTIVE_BIT))
+    ret |= checkDeath(nball);
+  // Bottom left
+  nball = getBall(row + 1, col - colOffset);
+  if (nball != 255 && getBallType(nball) == type && bitRead(balls[nball].state, ACTIVE_BIT))
+    ret |= checkDeath(nball);
+
+  return ret;
+}
+
+/*
+ * checkDeath
+ * takes: index of ball
+ * returns: bool - true if a ball was killed
+ *                 false if no ball was killed
+ *  this method checks a single ball for surrounding connections being greater than or equal to 2
+ *  and kills the ball if true.
+ */
+byte checkDeath(byte index) {
+    if (bitRead(balls[index].state, ACTIVE_BIT)) {
+      byte type = getBallType(index);
+      byte row = index / 11;
+      byte col = index % 11;
+      byte connections = 0;
+      byte colOffset = 1;
+      if (row % 2 == alignType)
+        colOffset = 0;
+      // Top left
+      byte nball = getBall(row-1, col - colOffset);
+      if (nball != 255 && getBallType(nball) == type && bitRead(balls[nball].state, ACTIVE_BIT))
+        connections++;
+      // Top right
+      nball = getBall(row-1, col + 1 - colOffset);
+      if (nball != 255 && getBallType(nball) == type && bitRead(balls[nball].state, ACTIVE_BIT))
+        connections++;
+      // Left
+      nball = getBall(row, col - 1);
+      if (nball != 255 && getBallType(nball) == type && bitRead(balls[nball].state, ACTIVE_BIT))
+        connections++;
+      // Right
+      nball = getBall(row, col + 1);
+      if (nball != 255 && getBallType(nball) == type && bitRead(balls[nball].state, ACTIVE_BIT))
+        connections++;
+      // Bottom right
+      nball = getBall(row + 1, col + 1 - colOffset);
+      if (nball != 255 && getBallType(nball) == type && bitRead(balls[nball].state, ACTIVE_BIT))
+        connections++;
+      // Bottom left
+      nball = getBall(row + 1, col - colOffset);
+      if (nball != 255 && getBallType(nball) == type && bitRead(balls[nball].state, ACTIVE_BIT))
+        connections++;
+
+      //Serial.print("Ball: "); Serial.print(i); Serial.print(" connections: "); Serial.println(connections);
+
+      if (connections >= 2) {
+        killBall(index);
+        return 1;
+      }
+    }
+  return 0;
 }
 
 /*

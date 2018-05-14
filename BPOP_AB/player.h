@@ -3,10 +3,11 @@
 
 #include "globals.h"
 
-extern bool checkDeath();
+extern byte checkDeath(byte index);
 extern void killBall(byte index);
 extern void deactivateDead();
 extern void checkRoots();
+extern byte checkSurrounding(byte index);
 
 class Ball {
 public:
@@ -90,7 +91,7 @@ void updateMovingBall() {
       bitSet(balls[indx].state, ACTIVE_BIT);
       bitClear(balls[indx].state, ROOT_BIT);
       aBall = 255;
-      if (checkDeath()) {
+      if (checkSurrounding(indx)) {
         falling = true;
         checkRoots();
       }
@@ -104,7 +105,7 @@ void updateMovingBall() {
         bitClear(balls[indx].state, ROOT_BIT);
       }
       aBall = 255;
-      if (checkDeath()) {
+      if (checkSurrounding(indx)) {
         falling = true;
         checkRoots();
       }
