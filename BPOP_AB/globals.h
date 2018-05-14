@@ -49,7 +49,7 @@ float aBallY = 0.0;
 float aBallRad;
 byte aBallSpeed = 1;
 byte aBall = 255;
-byte alignType = 1;
+byte alignType = 1;         // This should be toggled (0 -> 1, 1 -> 0, XOR'd with 1) each time the balls are shifted down.
 byte randomCounter = 0;
 byte fallOffset = 0;
 bool falling = false;
