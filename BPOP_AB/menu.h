@@ -15,11 +15,7 @@ void stateMenuMain()
   sprites.drawSelfMasked(0, 0, titleScreen, 0);
   for (byte i = 0; i < 4; i++)
   {
-    if (((2 + i) - menuSelection) != 0)
-    {
-      sprites.drawSelfMasked(21 + (22 * i), 60, menuText, i);
-    }
-    if (((2 + i) - menuSelection) == 0) sprites.drawSelfMasked(21 + (22 * i), 56, menuText, i);
+    sprites.drawErase(19 + (24 * i), 56, textMenu, i);
   }
   if (arduboy.justPressed(RIGHT_BUTTON) && (menuSelection < 5)) menuSelection++;
   if (arduboy.justPressed(LEFT_BUTTON) && (menuSelection > 2)) menuSelection--;
@@ -42,7 +38,7 @@ void stateMenuInfo()
 void stateMenuSoundfx()
 {
   sprites.drawSelfMasked(0, 0, titleScreen, 0);
-  
+
   if (arduboy.justPressed(RIGHT_BUTTON)) arduboy.audio.on();
   if (arduboy.justPressed(LEFT_BUTTON)) arduboy.audio.off();
   if (arduboy.justPressed(A_BUTTON | B_BUTTON))

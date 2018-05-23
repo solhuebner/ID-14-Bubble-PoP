@@ -40,8 +40,10 @@ const FunctionPointer PROGMEM mainGameLoop[] = {
 
 
 void setup() {
+  arduboy.boot();
+  arduboy.audio.begin();
+  arduboy.bootLogoSpritesSelfMasked();
   //ATM.play(titleSong);
-  arduboy.begin();
   arduboy.setFrameRate(60);                                 // set the frame rate of the game at 60 fps
   arduboy.initRandomSeed();                                 // This sets the random to more random, remove this if no random is needed !
 }
