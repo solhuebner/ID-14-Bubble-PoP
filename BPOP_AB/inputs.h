@@ -19,8 +19,8 @@ void checkInputs()
   if (arduboy.justPressed(B_BUTTON) && aBall == 255 && !falling && ballQueue[0] != DEAD_BALL) {
     aBall = ballQueue[0];
     shiftBallQueue(true);
-    aBallX = 64;
-    aBallY = 58;
+    aBallX = LAUNCHER_X;
+    aBallY = LAUNCHER_Y;
     aBallRad = radAngle;
   }
 

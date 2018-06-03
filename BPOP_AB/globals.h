@@ -23,8 +23,8 @@
 
 #define GAME_TOP                     0
 #define GAME_BOTTOM                  48
-#define GAME_LEFT                    0
-#define GAME_RIGHT                   112
+#define GAME_LEFT                    21
+#define GAME_RIGHT                   GAME_LEFT + 69
 
 #define FACING_SOUTH                 0
 #define FACING_WEST                  1
@@ -35,7 +35,10 @@
 
 #define ACTIVE_BIT                   5
 #define ROOT_BIT                     6
-#define TOTAL_BALLS                  121 // 11 rows X 11 columns
+#define TOTAL_COLUMNS                11
+#define TOTAL_BALLS                  TOTAL_COLUMNS * 11 // 11 rows X columns
+#define LAUNCHER_X                   (GAME_RIGHT - GAME_LEFT) / 2 + GAME_LEFT + 1
+#define LAUNCHER_Y                   58
 #define DEAD_BALL                    6
 #define TIMER_AMOUNT                 1000
 

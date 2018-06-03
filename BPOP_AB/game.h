@@ -51,7 +51,7 @@ void stateGamePlaying()
 
   // Draw guide
   if (aBall == 255)
-    arduboy.drawLine(64, 57, 64 + cos(radAngle) * 20, 57 - sin(radAngle) * 20, BLACK);
+    arduboy.drawLine(LAUNCHER_X, LAUNCHER_Y, LAUNCHER_X + cos(radAngle) * 20, LAUNCHER_Y - sin(radAngle) * 20, BLACK);
 
   // Draw Balls
   drawBalls();
@@ -60,9 +60,9 @@ void stateGamePlaying()
   }
   drawBallQueue();
   // Draw launcher
-  sprites.drawPlusMask(58, 50, sprLauncher, (launcherAngle - 22) / 28);
+  sprites.drawPlusMask(LAUNCHER_X - 6, LAUNCHER_Y - 8, sprLauncher, (launcherAngle - 22) / 28);
   if (ballQueue[0] != 255)
-    sprites.drawErase(58 + 4, 50 + 5, sprBalls, ballQueue[0]);
+    sprites.drawErase(LAUNCHER_X - 2, LAUNCHER_Y - 3, sprBalls, ballQueue[0]);
 };
 
 void stateGamePause()

@@ -189,14 +189,14 @@ PROGMEM const unsigned char sprBalls[] = {
 
 PROGMEM const unsigned char sprBottomWall[] = {
   // Bitmap Image. No transparency
-  // Width: 3 Height: 8
+  // Width: 2 Height: 8
   2, 8,
   0xEA, 0xE7,
 };
 
 PROGMEM const unsigned char sprBottomWallPattern[] = {
   // Bitmap Image. No transparency
-  // Width: 4 Height: 8
+  // Width: 3 Height: 8
   3, 8,
   0x0F, 0x3C, 0x33,
 };

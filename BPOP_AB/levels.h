@@ -77,8 +77,8 @@ byte checkSurrounding(byte index) {
     return true;
     
   byte type = getBallType(index);
-  byte row = index / 11;
-  byte col = index % 11;
+  byte row = index / TOTAL_COLUMNS;
+  byte col = index % TOTAL_COLUMNS;
   byte connections = 0;
   byte colOffset = 1;
   byte ret = 0;
@@ -124,8 +124,8 @@ byte checkSurrounding(byte index) {
 byte checkDeath(byte index) {
     if (bitRead(balls[index].state, ACTIVE_BIT)) {
       byte type = getBallType(index);
-      byte row = index / 11;
-      byte col = index % 11;
+      byte row = index / TOTAL_COLUMNS;
+      byte col = index % TOTAL_COLUMNS;
       byte connections = 0;
       byte colOffset = 1;
       if (row % 2 == alignType)
@@ -175,8 +175,8 @@ byte checkDeath(byte index) {
 void killBall(byte index) {
   byte type = getBallType(index);
   setBallType(index, DEAD_BALL); // dead black ball
-  byte col = index % 11;
-  byte row = index / 11;
+  byte col = index % TOTAL_COLUMNS;
+  byte row = index / TOTAL_COLUMNS;
   byte colOffset = 1;
   if (row % 2 == alignType)
     colOffset = 0;
@@ -239,10 +239,10 @@ void checkRoots() {
   for (byte i = TOTAL_BALLS-1; i < TOTAL_BALLS; i--) {
     bitClear(balls[i].state, ROOT_BIT);
   }
-  for (byte i = 10; i < 11; i--) {
+  for (byte i = TOTAL_COLUMNS-1; i < TOTAL_COLUMNS; i--) {
     if (bitRead(balls[i].state, ACTIVE_BIT) && getBallType(i) != 6) {
-      byte col = i % 11;
-      byte row = i / 11;
+      byte col = i % TOTAL_COLUMNS;
+      byte row = i / TOTAL_COLUMNS;
       byte colOffset = 1;
       if (row % 2 == alignType)
         colOffset = 0;
@@ -276,8 +276,8 @@ void checkRoots() {
  */
 void rootExpand(byte index) {
   bitSet(balls[index].state, ROOT_BIT);
-  byte col = index % 11;
-  byte row = index / 11;
+  byte col = index % TOTAL_COLUMNS;
+  byte row = index / TOTAL_COLUMNS;
   byte colOffset = 1;
   if (row % 2 == alignType)
     colOffset = 0;
@@ -315,13 +315,14 @@ void rootExpand(byte index) {
  * draws all the background elements of the board.
  */
 void drawBackground() {
-  for (byte i = 28; i < 29; i--) {
+  for (byte i = GAME_LEFT - 1; i < GAME_LEFT; i--) {
     for (byte j = 6; j < 7; j--) {
       sprites.drawOverwrite(i, j * 9 + i / 9, sprWallPattern, 0);
       sprites.drawOverwrite(127 - i, j * 9 + i / 9, sprWallPattern, 0);
     }
   }
-  
+
+  /* Score things should be changed.
   for (byte i = 23; i < 24; i--) {
     sprites.drawOverwrite(101 + i, 14, sprScoreBottom, 0);
   }
@@ -329,17 +330,18 @@ void drawBackground() {
   sprites.drawErase(100, 14, sprVerticalWall, 0);
   sprites.drawErase(126, 14, sprVerticalWall, 0);
   sprites.drawOverwrite(100, 3, sprScore, 0);
+  */
 
   for (byte i = 7; i < 8; i--) {
-    sprites.drawErase(29, i * 8, sprVerticalWall, 0);
-    sprites.drawErase(98, i * 8, sprVerticalWall, 0);
+    sprites.drawErase(GAME_LEFT, i * 8, sprVerticalWall, 0);
+    sprites.drawErase(GAME_RIGHT, i * 8, sprVerticalWall, 0);
   }
 
-  for (byte i = 33; i < 34; i--) {
-    sprites.drawOverwrite(30 + i * 2, 53, sprBottomWall, 0);
+  for (byte i = (GAME_RIGHT - GAME_LEFT) / 2 - 1; i < (GAME_RIGHT - GAME_LEFT) / 2; i--) {
+    sprites.drawOverwrite(GAME_LEFT + 1 + i * 2, 53, sprBottomWall, 0);
   }
-  for (byte i = 8; i < 9; i--) {
-    sprites.drawOverwrite(70 + i * 3, 58, sprBottomWallPattern, 0);
+  for (byte i = (GAME_RIGHT - LAUNCHER_X + 6) / 3 - 1; i < (GAME_RIGHT - 70) / 3; i--) {
+    sprites.drawOverwrite(LAUNCHER_X + 6 + i * 3, 58, sprBottomWallPattern, 0);
   }
 }
 

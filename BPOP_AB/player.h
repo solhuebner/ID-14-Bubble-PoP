@@ -38,30 +38,30 @@ byte getBallType(byte ballIndex) {
 }
 
 byte getBallIndex(byte x, byte y) {
-  if (x < 32 || x >= 94)
+  if (x < GAME_LEFT + 3 || x >= GAME_RIGHT - 4)
     return 255;
-  byte row = y / 5;
+  byte row = (y) / 5; // 5 is the vertical separation of balls
   byte col;
   if (row % 2 == alignType) {
-    col = (x - 32 - 2) / 6;
-    if (col >= 10)
+    col = (x - (GAME_LEFT + 3)) / 6; // 6 is the horizontal separation of balls
+    if (col >= TOTAL_COLUMNS - 1)
       return 255;
   }
   else
-    col = (x - 32) / 6;
-  if (row >= 11 || col >= 11)
+    col = (x - (GAME_LEFT + 3)) / 6;
+  if (row >= 11 || col >= TOTAL_COLUMNS)
     return 255;
-  return (col + row * 11);
+  return (col + row * TOTAL_COLUMNS);
 }
 
 byte getBall(byte row, byte col) {
-  if (row >= 11 || col >= 11)
+  if (row >= 11 || col >= TOTAL_COLUMNS)
     return 255;
 
-  if (row % 2 == alignType && col >= 10)
+  if (row % 2 == alignType && col >= TOTAL_COLUMNS - 1)
     return 255;
 
-  return (col + row * 11);
+  return (col + row * TOTAL_COLUMNS);
 }
 
 void fallingBalls() {
@@ -79,13 +79,27 @@ void fallingBalls() {
 
 void updateMovingBall() {
   if (aBall != 255) {
-    if (aBallX <= 34 || aBallX >= 94) {
-      aBallRad = PI - aBallRad;
+    if (aBallX <= GAME_LEFT + 5 || aBallX >= GAME_RIGHT - 4) {
+      aBallRad = PI - aBallRad; // reflect ball
     }
     aBallX += cos(aBallRad) * aBallSpeed;
     aBallY -= sin(aBallRad) * aBallSpeed;
-    byte forwardIndex = getBallIndex((byte)(aBallX + cos(aBallRad) * 3), (byte)(aBallY - sin(aBallRad) * 3));
-    if (forwardIndex != 255 && bitRead(balls[forwardIndex].state, ACTIVE_BIT)) {
+    //byte forwardIndex = getBallIndex((byte)(aBallX + cos(aBallRad) * 1.0), (byte)(aBallY - sin(aBallRad) * 1.0));
+    float abr = aBallRad;
+    if (aBallX <= GAME_LEFT + 5 || aBallX >= GAME_RIGHT - 4) {
+      abr = PI - abr; // reflect ball
+    }
+    byte forwardIndex[4];
+    forwardIndex[3] = getBallIndex((byte)(aBallX  + 1), (byte)(aBallY + 0));
+    forwardIndex[2] = getBallIndex((byte)(aBallX  - 1), (byte)(aBallY + 0));
+    forwardIndex[1] = getBallIndex((byte)(aBallX  + 0), (byte)(aBallY - 1));
+    forwardIndex[0] = getBallIndex((byte)(aBallX  + 0), (byte)(aBallY + 1));
+    byte fd = 255;
+    for (byte i = 3; i < 4; i--) {
+      if (forwardIndex[i] != 255 && bitRead(balls[forwardIndex[i]].state, ACTIVE_BIT))
+        fd &= forwardIndex[i];
+    }
+    if (fd != 255) {
       byte indx = getBallIndex((byte)aBallX, (byte)aBallY);
       setBallType(indx, aBall);
       bitSet(balls[indx].state, ACTIVE_BIT);
@@ -116,9 +130,9 @@ void updateMovingBall() {
 void drawBalls() {
   for (byte i = TOTAL_BALLS-1; i < TOTAL_BALLS; i--) {
     if (bitRead(balls[i].state, ACTIVE_BIT)) {
-      byte col = i % 11;
-      byte row = i / 11;
-      sprites.drawErase(32 + col * 6 + ((row % 2 == alignType) ? 3 : 0), 5 * row + 1 + ((getBallType(i) == 6) ? fallOffset : 0), sprBalls, getBallType(i));
+      byte col = i % TOTAL_COLUMNS;
+      byte row = i / TOTAL_COLUMNS;
+      sprites.drawErase(GAME_LEFT + 3 + col * 6 + ((row % 2 == alignType) ? 3 : 0), 5 * row + 1 + ((getBallType(i) == 6) ? fallOffset : 0), sprBalls, getBallType(i));
     }
   }
 }
@@ -142,28 +156,28 @@ void shiftBallQueue(bool newball) {
 void drawBallQueue() {
   for (byte i = 1; i < 6; i++) {
     if (ballQueue[i] != 255)
-      sprites.drawErase(56 - (i - 1) * 6, 59, sprBalls, ballQueue[i]);
+      sprites.drawErase(LAUNCHER_X - 6 - (i - 1) * 6, 59, sprBalls, ballQueue[i]);
   }
 }
 
 void shiftBallsDown(bool fillTopRow) {
   alignType ^= 1;
   for (byte i = 10; i > 0; i--) { // row
-    for (byte j = 10; j < 11; j--) { // column
-      balls[j + i * 11] = balls[j + (i - 1) * 11];
+    for (byte j = TOTAL_COLUMNS - 1; j < TOTAL_COLUMNS; j--) { // column
+      balls[j + i * TOTAL_COLUMNS] = balls[j + (i - 1) * TOTAL_COLUMNS];
     }
   }
   if (fillTopRow) {
-    for (byte i = 10; i < 11; i--) {
+    for (byte i = TOTAL_COLUMNS-1; i < TOTAL_COLUMNS; i--) {
       balls[i].state = generateRandomNumber(6);
       bitSet(balls[i].state, ACTIVE_BIT);
       bitSet(balls[i].state, ROOT_BIT);
     }
     if (!alignType)
-      bitClear(balls[10].state, ACTIVE_BIT); 
+      bitClear(balls[TOTAL_COLUMNS-1].state, ACTIVE_BIT); 
   }
   else {
-    for (byte i = 10; i < 11; i--) {
+    for (byte i = TOTAL_COLUMNS-1; i < TOTAL_COLUMNS; i--) {
       bitClear(balls[i].state, ACTIVE_BIT);
     }
   }
