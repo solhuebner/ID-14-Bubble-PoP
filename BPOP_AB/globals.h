@@ -21,10 +21,14 @@
 #define STATE_GAME_PAUSE             8
 #define STATE_GAME_OVER              9
 
+#define GAME_BORDER_LEFT             0
+#define GAME_BORDER_WIDTH            5
 #define GAME_TOP                     0
 #define GAME_BOTTOM                  48
-#define GAME_LEFT                    21
-#define GAME_RIGHT                   GAME_LEFT + 69
+#define GAME_WIDTH                   69
+#define GAME_LEFT                    ((GAME_BORDER_LEFT + GAME_BORDER_WIDTH) - 2)
+#define GAME_RIGHT                   (GAME_LEFT + GAME_WIDTH)
+#define GAME_BORDER_RIGHT            (GAME_RIGHT + GAME_BORDER_WIDTH)
 
 #define FACING_SOUTH                 0
 #define FACING_WEST                  1

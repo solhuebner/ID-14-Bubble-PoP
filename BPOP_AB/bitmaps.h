@@ -229,6 +229,34 @@ PROGMEM const unsigned char sprVerticalWall[] = {
   0xFF,
 };
 
+/*
+  const unsigned char PROGMEM playFieldBorder_plus_mask[] =
+  {
+  // width, height,
+  4, 8,
+  // FRAME 00
+  0xee, 0xff, 0x66, 0xff,
+  0x22, 0xff, 0x00, 0xff,
+  };
+*/
+
+const unsigned char PROGMEM playFieldBorder_plus_mask[] =
+{
+  // width, height,
+  5, 8,
+  // FRAME 00
+  0x00, 0xff, 0x77, 0xff, 0x33,
+  0xff, 0x11, 0xff, 0x00, 0xff,
+};
+
+const unsigned char PROGMEM playFieldMask_mask[] =
+{
+  // width, height,
+  8, 8,
+  // FRAME 00
+  0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
+};
+
 PROGMEM const unsigned char sprWallPattern[] = {
   // Bitmap Image. No transparency
   // Width: 1 Height: 8
