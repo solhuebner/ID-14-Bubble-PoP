@@ -325,6 +325,8 @@ void drawBackground() {
       sprites.drawErase (GAME_BORDER_RIGHT+(k*8), i*8,playFieldMask_mask, 0);
     }
   }
+
+  sprites.drawSelfMasked(80, 3, textScore, 0);
   /*
     for (byte i = GAME_LEFT - 1; i < GAME_LEFT; i--) {
     for (byte j = 6; j < 7; j--) {

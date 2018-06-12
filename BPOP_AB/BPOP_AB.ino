@@ -12,7 +12,7 @@
 */
 
 //determine the game
-#define GAME_ID 00
+#define GAME_ID 14
 
 #include "globals.h"
 #include "menu.h"
@@ -56,7 +56,7 @@ void loop() {
   arduboy.pollButtons();
   arduboy.clear();
   ((FunctionPointer) pgm_read_word (&mainGameLoop[gameState]))();
-  Serial.write(arduboy.getBuffer(), 128 * 64 / 8);
+  //Serial.write(arduboy.getBuffer(), 128 * 64 / 8);
   arduboy.display();
 }
 

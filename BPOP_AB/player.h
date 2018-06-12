@@ -132,6 +132,7 @@ void drawBalls() {
     if (bitRead(balls[i].state, ACTIVE_BIT)) {
       byte col = i % TOTAL_COLUMNS;
       byte row = i / TOTAL_COLUMNS;
+      sprites.drawPlusMask(GAME_LEFT + 2 + col * 6 + ((row % 2 == alignType) ? 3 : 0), 5 * row + ((getBallType(i) == 6) ? fallOffset : 0), ballMask_plus_mask, 0);
       sprites.drawErase(GAME_LEFT + 3 + col * 6 + ((row % 2 == alignType) ? 3 : 0), 5 * row + 1 + ((getBallType(i) == 6) ? fallOffset : 0), sprBalls, getBallType(i));
     }
   }
@@ -156,6 +157,7 @@ void shiftBallQueue(bool newball) {
 void drawBallQueue() {
   for (byte i = 1; i < 6; i++) {
     if (ballQueue[i] != 255)
+      sprites.drawPlusMask(LAUNCHER_X - 7 - (i - 1) * 6, 58, ballMask_plus_mask, 0);
       sprites.drawErase(LAUNCHER_X - 6 - (i - 1) * 6, 59, sprBalls, ballQueue[i]);
   }
 }
