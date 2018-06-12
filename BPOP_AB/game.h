@@ -9,10 +9,10 @@
 #include "levels.h"
 
 void stateMenuPlay()
-//void stateGamePrepareLevel()
 {
-  
-  gameState = STATE_GAME_NEXT_LEVEL;
+  sprites.drawPlusMask(34, 12, textArcade_plus_mask, 0);
+  sprites.drawPlusMask(26, 36, textInfinite_plus_mask, 0);
+  if (arduboy.justPressed(B_BUTTON)) gameState = STATE_GAME_NEXT_LEVEL;
 };
 
 

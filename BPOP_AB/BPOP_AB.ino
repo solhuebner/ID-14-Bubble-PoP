@@ -54,6 +54,7 @@ void loop() {
   arduboy.pollButtons();
   arduboy.clear();
   ((FunctionPointer) pgm_read_word (&mainGameLoop[gameState]))();
+  Serial.write(arduboy.getBuffer(), 128 * 64 / 8);
   arduboy.display();
 }
 
