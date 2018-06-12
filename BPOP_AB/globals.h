@@ -16,10 +16,12 @@
 #define STATE_MENU_SOUNDFX           5
 
 //define game states (on main menu)
-#define STATE_GAME_NEXT_LEVEL        6
-#define STATE_GAME_PLAYING           7
-#define STATE_GAME_PAUSE             8
-#define STATE_GAME_OVER              9
+#define STATE_GAME_ARCADE            6
+#define STATE_GAME_INFINITE          7
+#define STATE_GAME_NEXT_LEVEL        8
+#define STATE_GAME_PLAYING           9
+#define STATE_GAME_PAUSE             10
+#define STATE_GAME_OVER              11
 
 #define GAME_BORDER_LEFT             0
 #define GAME_BORDER_WIDTH            5
@@ -51,6 +53,8 @@ void setBallType(byte ballIndex, byte type);
 byte getBallType(byte ballIndex);
 void drawBalls();
 void killBall(byte index);
+
+bool modeSelect = false;
 
 float aBallX = 0.0;
 float aBallY = 0.0;

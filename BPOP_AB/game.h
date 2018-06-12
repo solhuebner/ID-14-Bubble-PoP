@@ -8,13 +8,36 @@
 #include "elements.h"
 #include "levels.h"
 
+const unsigned char PROGMEM textXY[][2] = {{1,0},{2,0},{3,1},{3,2},{2,3},{1,3},{0,2},{0,1}};
+
+byte textSequence = 0;
+
 void stateMenuPlay()
 {
-  sprites.drawPlusMask(34, 12, textArcade_plus_mask, 0);
-  sprites.drawPlusMask(26, 36, textInfinite_plus_mask, 0);
-  if (arduboy.justPressed(B_BUTTON)) gameState = STATE_GAME_NEXT_LEVEL;
+  arduboy.fillScreen(1);
+  if (arduboy.everyXFrames(4)) textSequence = (++textSequence) %8;
+  
+  byte coordinateX = pgm_read_byte(&textXY[textSequence][0]);
+  byte coordinateY = pgm_read_byte(&textXY[textSequence][1]);
+
+  sprites.drawPlusMask(34 + (coordinateX * (modeSelect - 1)), 12 + (coordinateY * (modeSelect - 1)), textArcade_plus_mask, 0);
+  sprites.drawPlusMask(26 + (coordinateX * modeSelect), 36 + (coordinateY * modeSelect), textInfinite_plus_mask, 0);
+  
+  if (arduboy.justPressed(UP_BUTTON)) modeSelect = false;
+  if (arduboy.justPressed(DOWN_BUTTON)) modeSelect = true;
+  if (arduboy.justPressed(B_BUTTON)) gameState = STATE_GAME_ARCADE + modeSelect;
 };
 
+
+void stateGameArcade()
+{
+  gameState = STATE_GAME_NEXT_LEVEL;
+}
+
+void stateGameInfinite()
+{
+  gameState = STATE_GAME_NEXT_LEVEL;
+}
 
 void stateGameNextLevel()
 {
